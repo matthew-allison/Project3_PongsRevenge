@@ -10,17 +10,17 @@ public:
 	
 	int screenWidth;
 	int screenHeight;
+	float ballX;
+	float ballY;
+	ofRectangle playerPaddle;
 
 private:
 	void moveConstraints();
 
-	ofRectangle playerPaddle;
 	ofPoint paddleCenter;
 	float paddleWidth;
 	float paddleHeight;
 	ofColor paddleColor;
 	string hmnSelect;
 	string whichPlayer;
-	float ballX;
-	float ballY;
 };

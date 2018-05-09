@@ -10,19 +10,14 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
+		void isHitting(Paddle* p1, Paddle* p2);
 		bool mouseClicked;
 
 		Paddle* player1;
 		Paddle* player2;
 		Ball* gameBall;
-		float p1InitX;
-		float* player1X;
-		float p1InitY;
-		float* player1Y;
-		float p2InitX;
-		float* player2X;
-		float p2InitY;
-		float* player2Y;
+		bool* ballHitPaddle;
+		bool ballHitSides;
 
 	private:
 		

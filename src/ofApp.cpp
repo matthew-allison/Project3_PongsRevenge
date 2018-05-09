@@ -11,14 +11,13 @@ void ofApp::setup(){
 	ofColor white(255, 255, 255);
 	player1 = new Paddle(10, ofGetHeight() / 2, "human", paddleWidth, paddleHeight, ofGetWidth(), ofGetHeight(), white, "player1");
 	player2 = new Paddle(ofGetWidth() - 20, ofGetHeight() / 2, "computer", paddleWidth, paddleHeight, ofGetWidth(), ofGetHeight(), white, "player2");
-	gameBall = new Ball(ofGetWidth(), ofGetHeight(), white);
+	gameBall = new Ball(ofGetWidth(), ofGetHeight(), white, .5, 0.5);
 }
 
 void ofApp::update(){
 	player1->playerMove(ofGetMouseX(), ofGetMouseY(), gameBall->updateX(), gameBall->updateY());
 	player2->playerMove(ofGetMouseX(), ofGetMouseY(), gameBall->updateX(), gameBall->updateY());
-	gameBall->moveBall();
-	gameBall->ballCollision(player1->ballHit(), player2->ballHit());
+	isHitting(player1, player2);
 }
 
 void ofApp::draw(){
@@ -27,3 +26,12 @@ void ofApp::draw(){
 	gameBall->drawBall();
 
 }
+
+void ofApp::isHitting(Paddle* p1, Paddle* p2) {
+	ofRectangle p1Rect(p1->playerPaddle);
+	ofRectangle p2Rect(p2->playerPaddle);
+	if (p1Rect.inside(gameBall->ballPos) || p2Rect.inside(gameBall->ballPos)) {
+		gameBall->xVel *= -1;
+		gameBall->yVel *= -1;
+	}
+

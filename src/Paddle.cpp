@@ -20,6 +20,7 @@ Paddle::Paddle(float initX, float initY, string hmnSelect, int paddleWidth, int 
 	else if (whichPlayer == "player2") {
 		this->whichPlayer = "player2";
 	}
+	
 };
 
 void Paddle::playerMove(int mouseX, int mouseY, float gameBallX, float gameBallY) {
@@ -73,8 +74,4 @@ void Paddle::moveConstraints() {
 		playerPaddle.setY(screenHeight - paddleHeight * 2);
 	}
 	
-}
-
-bool Paddle::ballHit() {
-	return playerPaddle.inside(ballX, ballY);
 }
