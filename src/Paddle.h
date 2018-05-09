@@ -4,22 +4,16 @@
 class Paddle {
 public:
 	Paddle(float initX, float initY, string hmnSelect, int paddleWidth, int paddleHeight, int screenWidth, int screenHeight, ofColor paddleColor, string whichPlayer);
-	void playerMove(int mouseX, int mouseY, float gameBallX, float gameBallY);
+	void playerMove(int mouseX, int mouseY, ofPoint ballPos);
 	void drawPlayer();
-	bool ballHit();
 	
 	int screenWidth;
 	int screenHeight;
-	float ballX;
-	float ballY;
 	ofRectangle playerPaddle;
 
 private:
 	void moveConstraints();
 
-	ofPoint paddleCenter;
-	float paddleWidth;
-	float paddleHeight;
 	ofColor paddleColor;
 	string hmnSelect;
 	string whichPlayer;

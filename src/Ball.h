@@ -13,11 +13,11 @@ public:
 	bool ballScorePlayer2;
 	float xVel;
 	float yVel;
+	int ballRadius;
 
 private:
 	int screenWidth;
 	int screenHeight;
-	int ballRadius;
 	ofColor ballColor;
 	bool mouseClicked;
 

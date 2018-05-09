@@ -7,7 +7,6 @@ Paddle::Paddle(float initX, float initY, string hmnSelect, int paddleWidth, int 
 	this->paddleColor = paddleColor;
 	this->screenWidth = screenWidth;
 	this->screenHeight = screenHeight;
-	this->paddleCenter = ofPoint(playerPaddle.getCenter());
 	if (hmnSelect == "human") {
 		this->hmnSelect = "human";
 	}
@@ -23,25 +22,22 @@ Paddle::Paddle(float initX, float initY, string hmnSelect, int paddleWidth, int 
 	
 };
 
-void Paddle::playerMove(int mouseX, int mouseY, float gameBallX, float gameBallY) {
-	ballX = gameBallX;
-	ballY = gameBallY;
-
+void Paddle::playerMove(int mouseX, int mouseY, ofPoint ballPos) {
 	if (hmnSelect == "human") {
 		playerPaddle.setX(mouseX);
 		playerPaddle.setY(mouseY);
 	}
 	if (hmnSelect == "computer") {
-		if (playerPaddle.getX() < ballX) {
+		if (playerPaddle.getX() < ballPos.x) {
 			playerPaddle.setX(playerPaddle.getX() + 1);
 		}
-		if (playerPaddle.getX() > ballX) {
+		if (playerPaddle.getX() > ballPos.x) {
 			playerPaddle.setX(playerPaddle.getX() - 1);
 		}
-		if (playerPaddle.getY() < ballY) {
+		if (playerPaddle.getY() < ballPos.y) {
 			playerPaddle.setY(playerPaddle.getY() + 1);
 		}
-		if (playerPaddle.getY() > ballY) {
+		if (playerPaddle.getY() > ballPos.y) {
 			playerPaddle.setY(playerPaddle.getY() - 1);
 		}
 	}
@@ -71,7 +67,7 @@ void Paddle::moveConstraints() {
 		playerPaddle.setY(0);
 	}
 	if (playerPaddle.getMaxY() >= screenHeight) {
-		playerPaddle.setY(screenHeight - paddleHeight * 2);
+		playerPaddle.setY(screenHeight - playerPaddle.getHeight());
 	}
 	
 }

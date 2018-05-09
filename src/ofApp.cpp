@@ -15,8 +15,8 @@ void ofApp::setup(){
 }
 
 void ofApp::update(){
-	player1->playerMove(ofGetMouseX(), ofGetMouseY(), gameBall->updateX(), gameBall->updateY());
-	player2->playerMove(ofGetMouseX(), ofGetMouseY(), gameBall->updateX(), gameBall->updateY());
+	player1->playerMove(ofGetMouseX(), ofGetMouseY(), gameBall->ballPos);
+	player2->playerMove(ofGetMouseX(), ofGetMouseY(), gameBall->ballPos);
 	isHitting(player1, player2);
 }
 
@@ -28,10 +28,17 @@ void ofApp::draw(){
 }
 
 void ofApp::isHitting(Paddle* p1, Paddle* p2) {
+	ofPoint restartBall(ofGetWidth() / 2, ofGetHeight() / 2);
 	ofRectangle p1Rect(p1->playerPaddle);
 	ofRectangle p2Rect(p2->playerPaddle);
 	if (p1Rect.inside(gameBall->ballPos) || p2Rect.inside(gameBall->ballPos)) {
 		gameBall->xVel *= -1;
 		gameBall->yVel *= -1;
 	}
-
+	if (gameBall->ballPos.x <= 0 + gameBall->ballRadius || gameBall->ballPos.x >= ofGetWidth() - gameBall->ballRadius) {
+		gameBall->ballPos = restartBall;
+	}
+	if (gameBall->ballPos.y <= 0 + gameBall->ballRadius || gameBall->ballPos.y >= ofGetHeight() - gameBall->ballRadius) {
+		gameBall->yVel *= -1;
+	}
+}
