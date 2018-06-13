@@ -2,11 +2,10 @@
 #include "Paddle.h"
 
 
-Paddle::Paddle(float initX, float initY, string hmnSelect, int paddleWidth, int paddleHeight, int screenWidth, int screenHeight, ofColor paddleColor, string whichPlayer) {
-	this->playerPaddle = ofRectangle(initX, initY, paddleWidth, paddleHeight);
-	this->paddleColor = paddleColor;
-	this->screenWidth = screenWidth;
-	this->screenHeight = screenHeight;
+Paddle::Paddle(float initX, float initY, string hmnSelect, int paddleWidth, int paddleHeight, ofColor paddleColor, string whichPlayer) {
+	this->playerPaddle = ofRectangle();
+	playerPaddle.setFromCenter(initX, initY, paddleWidth, paddleHeight);
+	this->color = paddleColor;
 	if (hmnSelect == "human") {
 		this->hmnSelect = "human";
 	}
@@ -22,52 +21,40 @@ Paddle::Paddle(float initX, float initY, string hmnSelect, int paddleWidth, int 
 	
 };
 
-void Paddle::playerMove(int mouseX, int mouseY, ofPoint ballPos) {
+void Paddle::move(int mouseX, int mouseY, float ballX, float ballY) {
 	if (hmnSelect == "human") {
-		playerPaddle.setX(mouseX);
-		playerPaddle.setY(mouseY);
+		playerPaddle.x = mouseX;
+		playerPaddle.y = mouseY;
 	}
 	if (hmnSelect == "computer") {
-		if (playerPaddle.getX() < ballPos.x) {
-			playerPaddle.setX(playerPaddle.getX() + 1);
+		if (playerPaddle.getMinX() < ballX &&
+			playerPaddle.getMaxX() > ballX &&
+			playerPaddle.getMinY() < ballY &&
+			playerPaddle.getMaxY() > ballY) {
+			playerPaddle.x += 0;
+			playerPaddle.y += 0;
 		}
-		if (playerPaddle.getX() > ballPos.x) {
-			playerPaddle.setX(playerPaddle.getX() - 1);
-		}
-		if (playerPaddle.getY() < ballPos.y) {
-			playerPaddle.setY(playerPaddle.getY() + 1);
-		}
-		if (playerPaddle.getY() > ballPos.y) {
-			playerPaddle.setY(playerPaddle.getY() - 1);
+		else {
+			if (playerPaddle.getMinX() < ballX) {
+				playerPaddle.x += 5;
+			}
+			if (playerPaddle.getMinX() > ballX) {
+				playerPaddle.x -= 5;
+			}
+			if (playerPaddle.getMinY() < ballY || playerPaddle.getMaxY() < ballY) {
+				playerPaddle.y += 5;
+				if (playerPaddle.getMaxY() + 10 > ballY) {
+					playerPaddle.y += 10;
+				}
+			}
+			if (playerPaddle.getMinY() > ballY || playerPaddle.getMaxY() > ballY) {
+				playerPaddle.y -= 5;
+			}
 		}
 	}
-	moveConstraints();
 }
 
-void Paddle::drawPlayer() {
-	ofSetColor(paddleColor);
+void Paddle::draw() {
+	ofSetColor(color);
 	ofDrawRectangle(playerPaddle);
-}
-
-void Paddle::moveConstraints() {
-	if (playerPaddle.getMinX() <= 0) {
-		playerPaddle.setX(0);
-	}
-	if (whichPlayer == "player1") {
-		if (playerPaddle.getMaxX() >= screenWidth / 2) {
-			playerPaddle.setX(screenWidth / 2);
-		}
-	}
-	else if (whichPlayer == "player2") {
-		if (playerPaddle.getMaxX() <= screenWidth / 2) {
-			playerPaddle.setX(screenWidth / 2);
-		}
-	}
-	if (playerPaddle.getMinY() <= 0) {
-		playerPaddle.setY(0);
-	}
-	if (playerPaddle.getMaxY() >= screenHeight) {
-		playerPaddle.setY(screenHeight - playerPaddle.getHeight());
-	}
-	
 }

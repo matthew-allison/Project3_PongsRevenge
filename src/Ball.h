@@ -3,22 +3,18 @@
 
 class Ball {
 public:
-	Ball(int screenWidth, int screenHeight, ofColor ballColor, float xVelocity, float yVelocity);
-	ofPoint moveBall();
-	void drawBall();
+	Ball(float initX, float initY, ofColor ballColor, float xVelocity, float yVelocity);
+	void move();
+	void draw();
 
-	ofPoint ballPos;
-	bool ballHitPaddle;
-	bool ballScorePlayer1;
-	bool ballScorePlayer2;
+	ofRectangle boundingBox;
+	float xPos;
+	float yPos;
 	float xVel;
 	float yVel;
-	int ballRadius;
+	int radius;
 
 private:
-	int screenWidth;
-	int screenHeight;
-	ofColor ballColor;
-	bool mouseClicked;
+	ofColor color;
 
 };

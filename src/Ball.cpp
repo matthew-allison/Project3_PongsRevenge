@@ -1,26 +1,25 @@
 #include "Ball.h"
 
-Ball::Ball(int screenWidth, int screenHeight, ofColor ballColor, float xVelocity, float yVelocity) {
-	this->ballPos = ofPoint(screenWidth, screenHeight);
+Ball::Ball(float initX, float initY, ofColor ballColor, float xVelocity, float yVelocity) {
+	this->xPos = initX;
+	this->yPos = initY;
+	this->boundingBox = ofRectangle();
+	boundingBox.setFromCenter(xPos, yPos, radius, radius);
+	this->boundingBox.x = xPos;
+	this->boundingBox.y = yPos;
 	this->xVel = xVelocity;
 	this->yVel = yVelocity;
-	this->yVel = 1;
-	this->ballRadius = 5;
-	this->ballColor = ballColor;
-	this->screenWidth = screenWidth;
-	this->screenHeight = screenHeight;
-	this->mouseClicked = mouseClicked;
-	bool ballHitPaddle = false;
-	bool ballScore = false;
+	this->radius = 5;
+	this->color = ballColor;
 }
 
-ofPoint Ball::moveBall() {
-	ballPos.x += xVel;
-	ballPos.y += yVel;
-	return ballPos;
+void Ball::move() {
+
+	xPos += xVel;
+	yPos += yVel;
 }
 
-void Ball::drawBall() {
-	ofSetColor(ballColor);
-	ofDrawCircle(ballPos.x, ballPos.y, ballRadius);
+void Ball::draw() {
+	ofSetColor(color);
+	ofDrawCircle(xPos, yPos, radius);
 }
